@@ -1,0 +1,15 @@
+clg/
+.DS_Store
+/.DS_Store
+.DS_Store/
+*.DS_Store
+airbnb-clone-backend/pyproject.toml
+airbnb-clone-backend/poetry.lock
+airbnb-clone-backend/config/__pycache__
+manage.py
+airbnb-clone-backend/db.sqlite3
+*.pyc
+migrations
+__pycache__
+.env
+__init__.py
