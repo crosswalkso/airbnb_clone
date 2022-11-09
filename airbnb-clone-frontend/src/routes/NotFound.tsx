@@ -1,17 +1,22 @@
-import { Button, Heading, Text, VStack } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Box, Button, HStack } from "@chakra-ui/react";
+import { Link, Outlet } from "react-router-dom";
+import { FaAirbnb } from "react-icons/fa";
 
-export default function NotFound() {
-  //   return <h1>404 Not Found Error</h1>;
+export default function Root() {
   return (
-    <VStack bg="green.100" minH="100vh" justifyContent={"center"}>
-      <Heading>Page not found.</Heading>
-      <Text>It seems that you're lost.</Text>
-      <Link to="/">
-        <Button colorScheme={"twitter"} variant={"solid"}>
-          Go home
-        </Button>
-      </Link>
-    </VStack>
+    <Box>
+      <HStack justifyContent={"space-between"} py={5} px={10} borderBottomWidth={1}>
+        <Box color="red.500">
+          <Link to={"/"}>
+            <FaAirbnb size={"48"} />
+          </Link>
+        </Box>
+        <HStack spacing={2}>
+          <Button>Log in</Button>
+          <Button colorScheme={"red"}>Sign up</Button>
+        </HStack>
+      </HStack>
+      <Outlet />
+    </Box>
   );
 }
