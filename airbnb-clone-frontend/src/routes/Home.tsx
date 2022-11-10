@@ -20,9 +20,10 @@ export default function Home() {
         "2xl": "repeat(5, 1fr)",
       }}
     >
-      {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 11, 1, 1].map((index) => (
-        <Room key={index} />
-      ))}
+      <Box>
+        <Skeleton rounded="2xl" h={280} mb={7} />
+        <SkeletonText width={"50%"} noOfLines={3} />
+      </Box>
     </Grid>
   );
 }
