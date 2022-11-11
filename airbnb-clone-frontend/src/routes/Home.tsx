@@ -51,7 +51,14 @@ export default function Home() {
         </>
       ) : null}
       {data?.map((room) => (
-        <Room key={room.pk} imageUrl={room.photos[0].file} name={room.name} rating={room.rating} price={room.price} />
+        <Room
+          key={room.pk}
+          pk={room.pk}
+          imageUrl={room.photos[0].file}
+          name={room.name}
+          rating={room.rating}
+          price={room.price}
+        />
       ))}
     </Grid>
   );

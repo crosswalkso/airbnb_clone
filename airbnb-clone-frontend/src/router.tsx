@@ -13,6 +13,10 @@ const router = createBrowserRouter([
         path: "",
         element: <Home />,
       },
+      {
+        path: "rooms/:roomPk",
+        element: <RoomDetail />,
+      },
     ],
   },
 ]);
