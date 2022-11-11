@@ -23,10 +23,7 @@ export default function Home() {
   return (
     <Grid
       mt={10}
-      px={{
-        base: 10,
-        lg: 40,
-      }}
+      px={40}
       columnGap={4}
       rowGap={8}
       templateColumns={{
@@ -54,7 +51,7 @@ export default function Home() {
         </>
       ) : null}
       {data?.map((room) => (
-        <Room imageUrl={room.photos[0].file} name={room.name} rating={room.rating} price={room.price} />
+        <Room key={room.pk} imageUrl={room.photos[0].file} name={room.name} rating={room.rating} price={room.price} />
       ))}
     </Grid>
   );
