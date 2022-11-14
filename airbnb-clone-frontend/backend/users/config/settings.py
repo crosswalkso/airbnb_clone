@@ -1,0 +1,1 @@
+GH_SECRET = env("GH_SECRET")
