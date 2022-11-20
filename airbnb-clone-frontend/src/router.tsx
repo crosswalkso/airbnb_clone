@@ -16,6 +16,10 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "rooms/upload",
+        element: <UploadRoom />,
+      },
+      {
         path: "rooms/:roomPk",
         element: <RoomDetail />,
       },
