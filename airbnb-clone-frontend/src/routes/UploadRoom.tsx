@@ -80,6 +80,27 @@ export default function UploadRoom() {
               </Select>
               <FormHelperText>What kind of room are you renting?</FormHelperText>
             </FormControl>
+            <FormControl>
+              <FormLabel>Category</FormLabel>
+              <Select placeholder="Choose a kind">
+                {categories?.map((category) => (
+                  <option key={category.pk} value={category.pk}>
+                    {category.name}
+                  </option>
+                ))}
+              </Select>
+              <FormHelperText>What Category describes your room?</FormHelperText>
+            </FormControl>
+            <FormControl>
+              <FormLabel>Amenities</FormLabel>
+              <Grid templateColumns={"1fr 1fr"} gap={5}>
+                {amenities?.map((amenity) => (
+                  <Box key={amenity.pk}>
+                    <Checkbox>{amenity.name}</Checkbox>
+                  </Box>
+                ))}
+              </Grid>
+            </FormControl>
           </VStack>
         </Container>
       </Box>
