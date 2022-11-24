@@ -20,14 +20,16 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { FaBed, FaMoneyBill, FaToilet } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { getAmenities, getCategories, IUploadRoomVariables, uploadRoom } from "../api";
 import useHostOnlyPage from "../components/HostOnlyPage";
 import ProtectedPage from "../components/ProtectedPage";
-import { IAmenity, ICategory } from "../types";
+import { IAmenity, ICategory, IRoomDetail } from "../types";
 
-export default function UploadRoom() {
+export default function UploadRoom(data: IRoomDetail) {
   const { register, handleSubmit } = useForm<IUploadRoomVariables>();
   const toast = useToast();
+  const navigate = useNavigate();
   const mutation = useMutation(uploadRoom, {
     onSuccess: () => {
       toast({
@@ -35,6 +37,7 @@ export default function UploadRoom() {
         title: "Room created",
         position: "bottom-right",
       });
+      navigate(`/rooms/${data.id}`);
     },
   });
   const { data: amenities } = useQuery<IAmenity[]>(["amenities"], getAmenities);
@@ -93,7 +96,7 @@ export default function UploadRoom() {
               <Textarea {...register("description", { required: true })} />
             </FormControl>
             <FormControl>
-              <Checkbox {...register("pet_friendly", { required: true })}>Pet friendly?</Checkbox>
+              <Checkbox {...register("pet_friendly")}>Pet friendly?</Checkbox>
             </FormControl>
             <FormControl>
               <FormLabel>Kind of room</FormLabel>
