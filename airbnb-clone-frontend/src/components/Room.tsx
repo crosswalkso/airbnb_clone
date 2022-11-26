@@ -23,7 +23,11 @@ export default function Room({ imageUrl, name, rating, price, isOwner }: IRoomPr
     <Link to={`/rooms/${pk}`}>
       <VStack alignItems={"flex-start"}>
         <Box position="relative" overflow={"hidden"} mb={3} rounded="3xl">
-          <Image h="100%" src={imageUrl} />
+          {imageUrl ? (
+            <Image objectFit={"cover"} minH="280" src={imageUrl} />
+          ) : (
+            <Box minH="280px" h="100%" w="100%" p={10} bg="green.400" />
+          )}
           <Button
             variant={"unstyled"}
             position="absolute"
