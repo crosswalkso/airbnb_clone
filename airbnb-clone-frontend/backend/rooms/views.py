@@ -54,8 +54,8 @@ class RoomBookingCheck(APIView):
         check_in = request.query_params.get("check_in")
         exists = Booking.objects.filter(
             room=room,
-            check_in__lte="check_out",
-            check_out__gte="check_in",
+            check_in__lte=check_out,
+            check_out__gte=check_in,
         ).exists()
         if exists:
             return Response({"ok": False})

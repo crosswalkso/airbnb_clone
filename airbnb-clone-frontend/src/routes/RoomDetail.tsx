@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Container,
   Grid,
   GridItem,
@@ -16,7 +17,7 @@ import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import { getRoom, getRoomReviews } from "../api";
+import { checkBooking, getRoom, getRoomReviews } from "../api";
 import { IReview, IRoomDetail } from "../types";
 import { useEffect, useState } from "react";
 
@@ -29,14 +30,15 @@ export default function RoomDetail() {
     getRoomReviews
   );
   const [dates, setDates] = useState<Date[]>();
-  useEffect(() => {
-    if (dates) {
-      const [firstDate, secondDate] = dates;
-      const [checkIn] = firstDate.toJSON().split("T");
-      const [checkOut] = secondDate.toJSON().split("T");
-      console.log(checkIn, checkOut);
+  const { data: checkBookingData, isLoading: isCheckingBooking } = useQuery(
+    ["check", roomPk, dates],
+    checkBooking,
+    {
+      cacheTime: 0,
+      enabled: dates !== undefined,
     }
-  });
+  );
+
   return (
     <Box mt={10} px={40} pb={40}>
       <Skeleton height={"43px"} width="25%" isLoaded={!isLoading}>
@@ -66,7 +68,7 @@ export default function RoomDetail() {
           </GridItem>
         ))}
       </Grid>
-      <Grid gap={20} templateColumns={"2fr 1fr"} maxW="container.lg">
+      <Grid gap={60} templateColumns={"2fr 1fr"}>
         <Box>
           <HStack width={"40%"} justifyContent={"space-between"} mt={10}>
             <VStack alignItems={"flex-start"}>
@@ -129,6 +131,18 @@ export default function RoomDetail() {
             maxDate={new Date(Date.now() + 60 * 60 * 24 * 7 * 4 * 6 * 1000)}
             selectRange
           />
+          <Button
+            disabled={!checkBookingData?.ok}
+            isLoading={isCheckingBooking}
+            my={5}
+            w="100%"
+            colorScheme={"red"}
+          >
+            Make Booking
+          </Button>
+          {!isCheckingBooking && !checkBookingData?.ok ? (
+            <Text color="red.500">Can't book on those dates, sorry</Text>
+          ) : null}
         </Box>
       </Grid>
     </Box>

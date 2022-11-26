@@ -152,3 +152,17 @@ export const createPhoto = ({ description, file, roomPk }: ICreatePhotoVariables
       }
     )
     .then((response) => response.data);
+type CheckBookingQueryKey = [string, string?, Date[]?];
+export const checkBooking = ({ queryKey }: QueryFunctionContext<CheckBookingQueryKey>) => {
+  const [_, roomPk, dates] = queryKey;
+  if (dates) {
+    const [firstDate, secondDate] = dates;
+    const [checkIn] = firstDate.toJSON().split("T");
+    const [checkOut] = secondDate.toJSON().split("T");
+    console.log(checkIn);
+    console.log(checkOut);
+    return instance
+      .get(`rooms/${roomPk}/bookings/check?check_in=${checkIn}&check_out=${checkOut}`)
+      .then((response) => response.data);
+  }
+};
