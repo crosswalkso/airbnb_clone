@@ -17,9 +17,11 @@ import { FaStar } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import "../calendar.css";
 import { checkBooking, getRoom, getRoomReviews } from "../api";
 import { IReview, IRoomDetail } from "../types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 export default function RoomDetail() {
   const { roomPk } = useParams();
@@ -68,6 +70,9 @@ export default function RoomDetail() {
           </GridItem>
         ))}
       </Grid>
+      <Helmet>
+        <title>{data ? data.name : "Loading..."}</title>
+      </Helmet>
       <Grid gap={60} templateColumns={"2fr 1fr"}>
         <Box>
           <HStack width={"40%"} justifyContent={"space-between"} mt={10}>
@@ -122,8 +127,9 @@ export default function RoomDetail() {
         </Box>
         <Box pt={10}>
           <Calendar
+            goToRangeStartOnSelect
             onChange={setDates}
-            showDoubleView
+            // showDoubleView
             prev2Label={null}
             next2Label={null}
             minDetail="month"
@@ -133,7 +139,7 @@ export default function RoomDetail() {
           />
           <Button
             disabled={!checkBookingData?.ok}
-            isLoading={isCheckingBooking}
+            isLoading={isCheckingBooking && dates !== undefined}
             my={5}
             w="100%"
             colorScheme={"red"}
