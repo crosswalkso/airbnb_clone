@@ -2,24 +2,33 @@ import { Box, Button, Container, FormControl, Heading, Input, VStack } from "@ch
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { getUploadURL } from "../api";
+import { getUploadURL, uploadImage } from "../api";
 import useHostOnlyPage from "../components/HostOnlyPage";
 import ProtectedPage from "../components/ProtectedPage";
 
 interface IForm {
   file: FileList;
 }
+interface IUploadURLResponse {
+  id: string;
+  uploadURL: string;
+}
 export default function UploadPhotos() {
-  const { register, handleSubmit } = useForm<IForm>();
-  const mutation = useMutation(getUploadURL, {
+  const { register, handleSubmit, watch } = useForm<IForm>();
+  const { roomPk } = useParams();
+  const uploadImageMutation = useMutation(uploadImage, {
     onSuccess: (data: any) => {
       console.log(data);
     },
   });
-  const { roomPk } = useParams();
+  const uploadURLMutation = useMutation(getUploadURL, {
+    onSuccess: (data: IUploadURLResponse) => {
+      uploadImageMutation.mutate({ uploadURL: data.uploadURL, file: watch("file") });
+    },
+  });
   useHostOnlyPage();
   const onSubmit = (data: any) => {
-    mutation.mutate();
+    uploadURLMutation.mutate();
   };
   return (
     <ProtectedPage>
